@@ -21,4 +21,25 @@ public class ProjectService {
             throw  new ProjectIdException("Project ID '"+project.getProjectIdentifier().toUpperCase()+"' already exists");
         }
     }
+
+    public Project findProjectByIdentifier(String projectId){
+
+        Project project = projectRepository.findByProjectIdentifier(projectId);
+        if(project == null){
+            throw  new ProjectIdException("Project ID '"+projectId.toUpperCase()+"' already exists");
+        }
+        return project;
+    }
+
+    public Iterable<Project> findAllProjects() {
+        return projectRepository.findAll();
+    }
+
+    public void deleteProjectByIdentifier(String projectId) {
+        Project project = projectRepository.findByProjectIdentifier(projectId);
+        if(project == null){
+            throw  new ProjectIdException("Project ID '"+projectId.toUpperCase()+"' can not be deleted, as it does not exists");
+        }
+        projectRepository.delete(project);
+    }
 }
